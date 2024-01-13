@@ -1,7 +1,10 @@
 import 'package:api_data_example/api.dart';
 import 'package:api_data_example/models/user.dart';
-import 'package:api_data_example/widgets/user_list_item.dart';
+//import 'package:api_data_example/widgets/user_list_item.dart';
 import 'package:flutter/material.dart';
+
+// ignore: constant_identifier_names
+enum AgentRole { Duelist, Initiator, Controller, Sentinel, Todos }
 
 class ListaPersonajes extends StatefulWidget {
   const ListaPersonajes({super.key});
@@ -11,6 +14,7 @@ class ListaPersonajes extends StatefulWidget {
 }
 
 class _ListaPersonajesState extends State<ListaPersonajes> {
+  AgentRole _selectedRole = AgentRole.Duelist; // Rol predeterminado
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +39,10 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
                   height: 60.0, // Altura del contenedor
                   child: InkWell(
                     onTap: () {
-                      // Acción para el primer botón arriba
+                      setState(() {
+                        _selectedRole =
+                            AgentRole.Todos; // Cambia según el botón presionado
+                      });
                     },
                     child: Container(
                       decoration: const BoxDecoration(
@@ -56,9 +63,12 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
                 flex: 1,
                 child: IconButton(
                   icon: Image.network(
-                      "https://media.valorant-api.com/agents/roles/4ee40330-ecdd-4f2f-98a8-eb1243428373/displayicon.png"), // Reemplaza con la ruta correcta de tus imágenes
+                      "https://media.valorant-api.com/agents/roles/dbe8757e-9e92-4ed4-b39f-9dfc589691d4/displayicon.png"),
                   onPressed: () {
-                    // Acción para el segundo botón arriba
+                    setState(() {
+                      _selectedRole =
+                          AgentRole.Duelist; // Cambia según el botón presionado
+                    });
                   },
                 ),
               ),
@@ -66,10 +76,12 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
                 flex: 1,
                 child: IconButton(
                   icon: Image.network(
-                      "https://media.valorant-api.com/agents/roles/5fc02f99-4091-4486-a531-98459a3e95e9/displayicon.png"), // Reemplaza con la ruta correcta de tus imágenes
-
+                      "https://media.valorant-api.com/agents/roles/5fc02f99-4091-4486-a531-98459a3e95e9/displayicon.png"),
                   onPressed: () {
-                    // Acción para el tercer botón arriba
+                    setState(() {
+                      _selectedRole = AgentRole
+                          .Sentinel; // Cambia según el botón presionado
+                    });
                   },
                 ),
               ),
@@ -77,9 +89,12 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
                 flex: 1,
                 child: IconButton(
                   icon: Image.network(
-                      "https://media.valorant-api.com/agents/roles/dbe8757e-9e92-4ed4-b39f-9dfc589691d4/displayicon.png"), // Reemplaza con la ruta correcta de tus imágenes
+                      "https://media.valorant-api.com/agents/roles/4ee40330-ecdd-4f2f-98a8-eb1243428373/displayicon.png"),
                   onPressed: () {
-                    // Acción para el cuarto botón arriba
+                    setState(() {
+                      _selectedRole = AgentRole
+                          .Controller; // Cambia según el botón presionado
+                    });
                   },
                 ),
               ),
@@ -87,9 +102,12 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
                 flex: 1,
                 child: IconButton(
                   icon: Image.network(
-                      "https://media.valorant-api.com/agents/roles/1b47567f-8f7b-444b-aae3-b0c634622d10/displayicon.png"), // Reemplaza con la ruta correcta de tus imágenes
+                      "https://media.valorant-api.com/agents/roles/1b47567f-8f7b-444b-aae3-b0c634622d10/displayicon.png"),
                   onPressed: () {
-                    // Acción para el quinto botón arriba
+                    setState(() {
+                      _selectedRole = AgentRole
+                          .Initiator; // Cambia según el botón presionado
+                    });
                   },
                 ),
               ),
@@ -97,7 +115,10 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
           ),
           Expanded(
             child: FutureBuilder(
-              future: apiLoadUsers(),
+              future: apiLoadUsers(
+                  role: _selectedRole == AgentRole.Todos
+                      ? null
+                      : _selectedRole.toString().split('.').last),
               builder: (
                 BuildContext context,
                 AsyncSnapshot<List<User>> snapshot,
@@ -117,9 +138,25 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
                         Navigator.pushNamed(context,
                             "Datos Personajes"); //Ruta para Datos Personajes
                       },
-                      //Imprime los datos especificados en el user.dart
-                      child: UserListItem(
-                        user: userList[index],
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(userList[index].avatarUrl),
+                        ),
+                        title: Text(userList[index].firstName),
+                        subtitle: Text(userList[index].description),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(userList[index].rol),
+                            Image.network(
+                              userList[index].iconoRol,
+                              width: 24,
+                              height: 24,
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
