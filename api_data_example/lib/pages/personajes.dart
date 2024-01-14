@@ -132,37 +132,62 @@ class _DatosPersonajesState extends State<DatosPersonajes>
                       // Descripción centrada
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(
-                          widget.user.description,
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.white, // Texto en color blanco
-                          ),
-                          textAlign: TextAlign.center,
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.user.description,
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white, // Texto en color blanco
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16.0),
+                            // Botones de habilidades
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: widget.user.abilities
+                                  .map((ability) => InkWell(
+                                        onTap: () {
+                                          // Al hacer clic en la habilidad, actualiza la información
+                                          setState(() {
+                                            selectedAbility = ability;
+                                          });
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            AnimatedContainer(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              width: ability == selectedAbility
+                                                  ? 60.0
+                                                  : 40.0,
+                                              height: ability == selectedAbility
+                                                  ? 60.0
+                                                  : 40.0,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    ability == selectedAbility
+                                                        ? const Color.fromARGB(
+                                                            255, 189, 70, 62)
+                                                        : Colors.grey,
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                            CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  ability.displayIcon),
+                                              radius: 20.0,
+                                            ),
+                                          ],
+                                        ),
+                                      ))
+                                  .toList(),
+                            ),
+                          ],
                         ),
                       ),
-                      // Otros detalles del agente...
-
-                      // Botones de habilidades
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: widget.user.abilities
-                            .map((ability) => IconButton(
-                                  icon: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(ability.displayIcon),
-                                    radius: 20.0,
-                                  ),
-                                  onPressed: () {
-                                    // Al hacer clic en la habilidad, actualiza la información
-                                    setState(() {
-                                      selectedAbility = ability;
-                                    });
-                                  },
-                                ))
-                            .toList(),
-                      ),
-
                       // Información de la habilidad seleccionada
                       Container(
                         color: const Color.fromARGB(

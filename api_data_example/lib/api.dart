@@ -28,11 +28,11 @@ Future<List<User>> apiLoadUsers({String? role}) async {
       }
     }
 
-    print("User List: $userList");
+    //print("User List: $userList");
 
     return userList;
   } catch (e) {
-    print("Error loading data: $e");
+    //print("Error loading data: $e");
     rethrow; // Reenvía la excepción después de imprimir el mensaje
   }
 }
