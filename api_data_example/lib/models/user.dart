@@ -1,6 +1,6 @@
 class User {
   String uuid, firstName, description;
-  String avatarUrl;
+  String avatarUrl, fotoGrande;
   String rol, iconoRol;
   List<Ability> abilities;
 
@@ -9,6 +9,7 @@ class User {
         firstName = json["displayName"] ?? "",
         description = json["description"] ?? "",
         avatarUrl = json["displayIcon"] ?? "",
+        fotoGrande = json["fullPortrait"] ?? "",
         rol = json["role"]?["displayName"] ?? "",
         iconoRol = json["role"]?["displayIcon"] ?? "",
         abilities = (json["abilities"] as List<dynamic>?)
