@@ -24,9 +24,9 @@ class ApiDataLoadApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //Rutas de las pantallas
-      home: const mainMenu(),
+      home: const MainMenu(),
       routes: {
-        'mainMenu': (context) => const mainMenu(),
+        'mainMenu': (context) => const MainMenu(),
         'Lista Mapas': (context) => const ListaMapas(),
         'Lista Personajes': (context) => const ListaPersonajes(),
         'Datos Mapa': (context) => const DatosMapa(),
