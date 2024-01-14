@@ -1,5 +1,6 @@
 import 'package:api_data_example/api.dart';
 import 'package:api_data_example/models/user.dart';
+import 'package:api_data_example/pages/personajes.dart';
 //import 'package:api_data_example/widgets/user_list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -135,8 +136,14 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
                   itemBuilder: (BuildContext context, int index) {
                     return ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context,
-                            "Datos Personajes"); //Ruta para Datos Personajes
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DatosPersonajes(
+                              user: userList[index],
+                            ),
+                          ),
+                        );
                       },
                       child: ListTile(
                         leading: CircleAvatar(

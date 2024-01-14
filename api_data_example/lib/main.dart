@@ -1,3 +1,4 @@
+import 'package:api_data_example/models/user.dart';
 import 'package:api_data_example/pages/menuPrincipal.dart';
 
 import 'package:api_data_example/pages/mapas.dart';
@@ -29,7 +30,11 @@ class ApiDataLoadApp extends StatelessWidget {
         'Lista Mapas': (context) => const ListaMapas(),
         'Lista Personajes': (context) => const ListaPersonajes(),
         'Datos Mapa': (context) => const DatosMapa(),
-        'Datos Personajes': (context) => const DatosPersonajes(),
+        'Datos Personajes': (context) {
+          // Extrae el usuario de los argumentos de la ruta
+          final user = ModalRoute.of(context)?.settings.arguments as User;
+          return DatosPersonajes(user: user);
+        },
       },
     );
   }
