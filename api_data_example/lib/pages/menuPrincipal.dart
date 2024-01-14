@@ -17,14 +17,31 @@ class _mainMenuState extends State<mainMenu> {
         title: const Text('Pantalla de MenuPrincipal'),
       ),
       body: Center(
-          //Boton para pasar al menu de perosnajes
-          child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(
-              context, "Lista Personajes"); //Ruta para llegar al menu
-        },
-        child: const Text('Lista Personajes'), //Frase para el boton
-      )),
+        // Botón para pasar al menú de personajes
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context, "Lista Personajes",
+                ); // Ruta para llegar al menú de personajes
+              },
+              child: const Text('Lista Personajes'), // Frase para el botón
+            ),
+            SizedBox(height: 20), // Espacio entre botones
+            // Botón para pasar a la lista de mapas
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context, "Lista Mapas",
+                ); // Ruta para llegar a la lista de mapas
+              },
+              child: const Text('Lista Mapas'), // Frase para el botón
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
