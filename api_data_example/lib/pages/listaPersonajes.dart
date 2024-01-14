@@ -4,16 +4,28 @@ import 'package:api_data_example/pages/personajes.dart';
 import 'package:flutter/material.dart';
 
 enum AgentRole {
-  // ignore: constant_identifier_names
   Duelist,
-  // ignore: constant_identifier_names
   Initiator,
-  // ignore: constant_identifier_names
   Controller,
-  // ignore: constant_identifier_names
   Sentinel,
-  // ignore: constant_identifier_names
   Todos,
+}
+
+extension AgentRoleExtension on AgentRole {
+  dynamic get icon {
+    switch (this) {
+      case AgentRole.Duelist:
+        return "https://media.valorant-api.com/agents/roles/dbe8757e-9e92-4ed4-b39f-9dfc589691d4/displayicon.png";
+      case AgentRole.Initiator:
+        return "https://media.valorant-api.com/agents/roles/1b47567f-8f7b-444b-aae3-b0c634622d10/displayicon.png";
+      case AgentRole.Controller:
+        return "https://media.valorant-api.com/agents/roles/4ee40330-ecdd-4f2f-98a8-eb1243428373/displayicon.png";
+      case AgentRole.Sentinel:
+        return "https://media.valorant-api.com/agents/roles/5fc02f99-4091-4486-a531-98459a3e95e9/displayicon.png";
+      case AgentRole.Todos:
+        return 1;
+    }
+  }
 }
 
 class ListaPersonajes extends StatefulWidget {
@@ -41,133 +53,11 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _selectedRole = AgentRole.Todos;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: _selectedRole == AgentRole.Todos ? 40.0 : 30.0,
-                    height: _selectedRole == AgentRole.Todos ? 40.0 : 30.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _selectedRole == AgentRole.Todos
-                          ? Colors.red
-                          : const Color.fromARGB(255, 189, 70, 62),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "1",
-                        style: TextStyle(fontSize: 14.0, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _selectedRole = AgentRole.Duelist;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: _selectedRole == AgentRole.Duelist ? 40.0 : 30.0,
-                    height: _selectedRole == AgentRole.Duelist ? 40.0 : 30.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _selectedRole == AgentRole.Duelist
-                          ? Colors.red
-                          : const Color.fromARGB(255, 189, 70, 62),
-                    ),
-                    child: Image.network(
-                      "https://media.valorant-api.com/agents/roles/dbe8757e-9e92-4ed4-b39f-9dfc589691d4/displayicon.png",
-                      width: 20.0,
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _selectedRole = AgentRole.Sentinel;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: _selectedRole == AgentRole.Sentinel ? 40.0 : 30.0,
-                    height: _selectedRole == AgentRole.Sentinel ? 40.0 : 30.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _selectedRole == AgentRole.Sentinel
-                          ? Colors.red
-                          : const Color.fromARGB(255, 189, 70, 62),
-                    ),
-                    child: Image.network(
-                      "https://media.valorant-api.com/agents/roles/5fc02f99-4091-4486-a531-98459a3e95e9/displayicon.png",
-                      width: 20.0,
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _selectedRole = AgentRole.Controller;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: _selectedRole == AgentRole.Controller ? 40.0 : 30.0,
-                    height: _selectedRole == AgentRole.Controller ? 40.0 : 30.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _selectedRole == AgentRole.Controller
-                          ? Colors.red
-                          : const Color.fromARGB(255, 189, 70, 62),
-                    ),
-                    child: Image.network(
-                      "https://media.valorant-api.com/agents/roles/4ee40330-ecdd-4f2f-98a8-eb1243428373/displayicon.png",
-                      width: 20.0,
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      _selectedRole = AgentRole.Initiator;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: _selectedRole == AgentRole.Initiator ? 40.0 : 30.0,
-                    height: _selectedRole == AgentRole.Initiator ? 40.0 : 30.0,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _selectedRole == AgentRole.Initiator
-                          ? Colors.red
-                          : const Color.fromARGB(255, 189, 70, 62),
-                    ),
-                    child: Image.network(
-                      "https://media.valorant-api.com/agents/roles/1b47567f-8f7b-444b-aae3-b0c634622d10/displayicon.png",
-                      width: 20.0,
-                    ),
-                  ),
-                ),
-              ),
+              buildRoleButton(AgentRole.Todos, 30.0),
+              buildRoleButton(AgentRole.Duelist, 30.0),
+              buildRoleButton(AgentRole.Sentinel, 30.0),
+              buildRoleButton(AgentRole.Controller, 30.0),
+              buildRoleButton(AgentRole.Initiator, 24.0),
             ],
           ),
           Expanded(
@@ -249,6 +139,48 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildRoleButton(AgentRole role, double size) {
+    return Flexible(
+      flex: 1,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _selectedRole = role;
+          });
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: _selectedRole == role ? size + 10.0 : size,
+              height: _selectedRole == role ? size + 10.0 : size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _selectedRole == role
+                    ? const Color.fromARGB(255, 189, 70, 62)
+                    : Color.fromARGB(255, 48, 48, 48),
+              ),
+            ),
+            if (role != AgentRole.Todos)
+              Image.network(
+                role.icon,
+                width: size,
+                color: Colors.white,
+              ),
+            if (role == AgentRole.Todos)
+              const Center(
+                child: Text(
+                  "1",
+                  style: TextStyle(fontSize: 14.0, color: Colors.white),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

@@ -64,7 +64,7 @@ class _DatosPersonajesState extends State<DatosPersonajes>
         ),
       ),
       body: Container(
-        color: Colors.black, // Fondo negro
+        color: const Color.fromARGB(255, 41, 41, 41), // Fondo negro
         child: Column(
           children: [
             // Barra horizontal con el nombre, rol e icono del rol
@@ -171,7 +171,8 @@ class _DatosPersonajesState extends State<DatosPersonajes>
                                                     ability == selectedAbility
                                                         ? const Color.fromARGB(
                                                             255, 189, 70, 62)
-                                                        : Colors.grey,
+                                                        : Color.fromARGB(
+                                                            255, 48, 48, 48),
                                                 shape: BoxShape.circle,
                                               ),
                                             ),
@@ -179,6 +180,8 @@ class _DatosPersonajesState extends State<DatosPersonajes>
                                               backgroundImage: NetworkImage(
                                                   ability.displayIcon),
                                               radius: 20.0,
+                                              backgroundColor: Colors
+                                                  .transparent, // Fondo transparente
                                             ),
                                           ],
                                         ),
