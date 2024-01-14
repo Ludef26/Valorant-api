@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:api_data_example/models/user-map.dart';
+import 'package:api_data_example/api_map.dart';
 
 class Map {
   final String displayName;
@@ -28,87 +30,92 @@ class _ListaMapasState extends State<ListaMapas> {
       backgroundColor: const Color.fromARGB(255, 41, 41, 41),
       appBar: AppBar(
         toolbarHeight: 50.0,
-        title: const Text('Lista de Mapas'),
+        title: const Text('Lista Mapas'),  // Corrected the title
         backgroundColor: const Color.fromARGB(255, 189, 70, 62),
       ),
-      body: FutureBuilder(
-        future: apiLoadMaps(),
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<List<Map>> snapshot,
-        ) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final mapList = snapshot.data!;
-          return ListView.builder(
-            itemCount: mapList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: Navegación a detalles del mapa
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder(
+              future: loadData(),
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<UserMap>> snapshot,
+              ) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final userList = snapshot.data!;
+                return ListView.builder(
+                  itemCount: userList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: ElevatedButton(
+                        onPressed: () {},  // Add the desired functionality
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 189, 70, 62),
+                          padding: const EdgeInsets.all(8.0),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(8.0),
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(userList[index].displayIcon),
+                          ),
+                          title: Text(
+                            userList[index].displayName,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 14.0),
+                          ),
+                          subtitle: Text(
+                            userList[index].narrativeDescription,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12.0),
+                          ),
+                          trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              // Add any additional widgets or functionality here
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 189, 70, 62),
-                    padding: const EdgeInsets.all(8.0),
-                  ),
-                  child: ListTile(
-                    contentPadding: const EdgeInsets.all(8.0),
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(mapList[index].displayIcon),
-                    ),
-                    title: Text(
-                      mapList[index].displayName,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.0,
-                      ),
-                    ),
-                    subtitle: Text(
-                      mapList[index].narrativeDescription,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
-        },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Future<List<Map>> apiLoadMaps() async {
+  Future<List<UserMap>> loadData() async {
     try {
-      final uri = Uri.parse("https://valorant-api.com/v1/maps"); // Reemplaza con la URL real de la API de mapas
+      final uri = Uri.parse("https://valorant-api.com/v1/maps");
       final response = await http.get(uri);
 
       if (response.statusCode != 200) {
         throw Exception(
-            "Failed to load map data. Status code: ${response.statusCode}");
+            "Failed to load data from the API. Status code: ${response.statusCode}");
       }
 
       final json = jsonDecode(response.body);
-      final jsonMapList = json["data"];
-      final List<Map> mapList = [];
+      final jsonUserList = json["data"];
+      final List<UserMap> userList = []; // Assuming you parse the data appropriately
 
-      for (final jsonMap in jsonMapList) {
-        final map = Map(
-          displayName: jsonMap['displayName'],
-          narrativeDescription: jsonMap['narrativeDescription'],
-          displayIcon: jsonMap['displayIcon'],
-        );
-        mapList.add(map);
+      // Parse the JSON data and populate the userList
+      for (var userData in jsonUserList) {
+        userList.add(UserMap.fromJson(userData));
       }
 
-      return mapList;
+      return userList;
     } catch (e) {
       rethrow;
     }
