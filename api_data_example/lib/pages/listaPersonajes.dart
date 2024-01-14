@@ -44,7 +44,7 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
       backgroundColor: const Color.fromARGB(255, 41, 41, 41),
       appBar: AppBar(
         toolbarHeight: 50.0,
-        title: const Text('Menu Principal'),
+        title: const Text('Lista Personajes'),
         backgroundColor: const Color.fromARGB(255, 189, 70, 62),
       ),
       body: Column(
